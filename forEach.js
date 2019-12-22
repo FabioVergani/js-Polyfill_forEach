@@ -1,3 +1,5 @@
+//Polyfill:
+//#[].forEach
 (function(){
 	var o=[];
 	if('function' !== typeof o.forEach){
