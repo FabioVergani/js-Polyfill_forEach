@@ -1,12 +1,44 @@
-//noprotect
+(function(){
+	var o=[];
+	if('function' !== typeof o.forEach){
+		o.constructor.prototype.forEach=function(callback,thisArg){
+			if('function' !== typeof callback){
+				throw new TypeError(callback+' is not a function!')
+			}else{
+				if('undefined' !== typeof thisArg){
+					for(var e=thisArg,f=callback,i=0,m=this;i<m.length;++i){
+						f.call(e,m[i],i,m)
+					}
+				}else{
+					for(var f=callback,i=0,m=this;i<m.length;++i){
+						f(m[i],i,m)
+					}
+				}
+			}
+		}
+	}
+})();
 
-var  Array=window.Array,
-$AP=Array.prototype;
+/*
+//#A
 
-$AP.forEach=$AP.forEach||function(f,t){
- var o=this, e=Object(o), i=e.length, l=i>>>0, c=f;
- if(i>0){
-	if(typeof(c)==='function'){e=t;i=0;while(i<l){c.call(e,o[i],i,o);i++;};}else{throw new TypeError('each callback is not a function');};
- };
-};
+	[1,2,3].forEach(function(v,i,m){
+		console.log(v,i,m)
+	});
 
+	//1,0,[1, 2, 3]
+	//2,1,[1, 2, 3]
+	//3,2,[1, 2, 3]
+
+
+//#B
+	[1,2,3].forEach2(function(v,i,m){
+		this[i]=v;
+		console.log(v,i,m,this)
+	},{});
+
+	//1,0,[1, 2, 3],{0:1}
+	//2,1,[1, 2, 3],{0:1,1:2}
+	//3,2,[1, 2, 3],{0:1,1:2,2:3}
+
+*/
